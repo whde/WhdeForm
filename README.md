@@ -3,12 +3,12 @@ iOS 表格
 ```objective-c
 pod 'WhdeForm', '~> 1.0.0'
 ```
-- 添加了Reusable机制
-- 添加了横（Section）表头
-- 添加了竖（Column）表头
-- 添加了左上角（TopLeftHeader）总表头
-- 通过FDateSource去创建各个元素，类似TableView
-- 添加了FIndexPath,{section, column}
+- 添加了<code>Reusable</code>机制
+- 添加了横（<code>Section</code>）表头
+- 添加了竖（<code>Column</code>）表头
+- 添加了左上角（<code>TopLeftHeader</code>）总表头
+- 通过<code>FDateSource</code>去创建各个元素，类似<code>TableView</code>
+- 添加了<code>FIndexPath,{section, column}</code>
 - 表头添加点击事件
 - 添加了网格
 <p><image src="https://raw.githubusercontent.com/whde/WhdeForm/master/Screen.gif" width=200 height=100%/></p>
