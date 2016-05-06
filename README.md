@@ -1,5 +1,8 @@
 # WhdeForm
 iOS 表格
+```objective-c
+pod 'WhdeForm', '~> 1.0.0'
+```
 - 添加了Reusable机制
 - 添加了横（Section）表头
 - 添加了竖（Column）表头
