@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Whdeform by whde</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Whdeform</h1>
+      <h2 class="project-tagline">表格</h2>
+      <a href="https://github.com/whde/WhdeForm" class="btn">View on GitHub</a>
+      <a href="https://github.com/whde/WhdeForm/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/whde/WhdeForm/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="whdeform" class="anchor" href="#whdeform" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>WhdeForm</h1>
+
+<p>iOS 表格</p>
+
+<div class="highlight highlight-source-objc"><pre>pod <span class="pl-s"><span class="pl-pds">'</span>WhdeForm<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>~&gt; 1.0.0<span class="pl-pds">'</span></span></pre></div>
+
+<ul>
+<li>添加了<code>Reusable</code>机制</li>
+<li>添加了横（<code>Section</code>）表头</li>
+<li>添加了竖（<code>Column</code>）表头</li>
+<li>添加了左上角（<code>TopLeftHeader</code>）总表头</li>
+<li>通过<code>FDateSource</code>去创建各个元素，类似<code>TableView</code>
+</li>
+<li>添加了<code>FIndexPath,{section, column}</code>
+</li>
+<li>表头添加点击事件</li>
+<li>添加了网格
+<p></p>
+</li>
+</ul>
+
+<h1>
+<a id="使用" class="anchor" href="#%E4%BD%BF%E7%94%A8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>使用</h1>
+
+<div class="highlight highlight-source-objc"><pre>#<span class="pl-k">import</span> <span class="pl-s"><span class="pl-pds">"</span>ViewController.h<span class="pl-pds">"</span></span>
+#<span class="pl-k">import</span> <span class="pl-s"><span class="pl-pds">"</span>FormScrollView.h<span class="pl-pds">"</span></span>
+<span class="pl-k">@interface</span> <span class="pl-en">ViewController</span> ()&lt;FDelegate, FDataSource&gt; {
+    <span class="pl-c1">NSArray</span> *_data;
+}
+
+<span class="pl-k">@end</span>
+
+<span class="pl-k">@implementation</span> <span class="pl-en">ViewController</span>
+
+- (<span class="pl-k">void</span>)<span class="pl-en">viewDidLoad</span> {
+    [<span class="pl-v">super</span> <span class="pl-c1">viewDidLoad</span>];
+    self.<span class="pl-smi">edgesForExtendedLayout</span> = UIRectEdgeNone;
+    self.<span class="pl-smi">view</span>.<span class="pl-smi">autoresizingMask</span> = UIViewAutoresizingNone;
+    FormScrollView *table = [[FormScrollView <span class="pl-c1">alloc</span>] <span class="pl-c1">initWithFrame:</span><span class="pl-c1">CGRectMake</span>(<span class="pl-c1">0</span>, <span class="pl-c1">0</span>, <span class="pl-v">self</span>.view.frame.size.width, <span class="pl-v">self</span>.view.frame.size.height-<span class="pl-c1">64</span>)];
+    table.<span class="pl-smi">contentInset</span> = <span class="pl-c1">UIEdgeInsetsMake</span>(<span class="pl-c1">0</span>, <span class="pl-c1">0</span>, <span class="pl-c1">0</span>, <span class="pl-c1">0</span>);
+    table.<span class="pl-smi">fDelegate</span> = self;
+    table.<span class="pl-smi">fDataSource</span> = self;
+    [<span class="pl-v">self</span>.view <span class="pl-c1">addSubview:</span>table];
+
+    _data = [<span class="pl-c1">NSArray</span> <span class="pl-c1">arrayWithContentsOfFile:</span>[[<span class="pl-c1">NSBundle</span> <span class="pl-c1">mainBundle</span>] <span class="pl-c1">pathForResource:</span><span class="pl-s"><span class="pl-pds">@"</span>datas<span class="pl-pds">"</span></span> <span class="pl-c1">ofType:</span><span class="pl-s"><span class="pl-pds">@"</span>plist<span class="pl-pds">"</span></span>]];
+    [table <span class="pl-c1">reloadData</span>];
+}
+- (FTopLeftHeaderView *)<span class="pl-en">topLeftHeadViewForForm</span><span class="pl-en">:</span>(FormScrollView *)<span class="pl-smi">formScrollView</span> {
+    FTopLeftHeaderView *view = [formScrollView <span class="pl-c1">dequeueReusableTopLeftView</span>];
+    <span class="pl-k">if</span> (view == <span class="pl-c1">NULL</span>) {
+        view = [[FTopLeftHeaderView <span class="pl-c1">alloc</span>] <span class="pl-c1">initWithSectionTitle:</span><span class="pl-s"><span class="pl-pds">@"</span>行数<span class="pl-pds">"</span></span> <span class="pl-c1">columnTitle:</span><span class="pl-s"><span class="pl-pds">@"</span>列数<span class="pl-pds">"</span></span>];
+    }
+    <span class="pl-k">return</span> view;
+}
+
+- (<span class="pl-k">NSInteger</span>)<span class="pl-en">numberOfSection</span><span class="pl-en">:</span>(FormScrollView *)<span class="pl-smi">formScrollView</span> {
+    <span class="pl-k">return</span> _data.<span class="pl-smi">count</span>;
+}
+- (<span class="pl-k">NSInteger</span>)<span class="pl-en">numberOfColumn</span><span class="pl-en">:</span>(FormScrollView *)<span class="pl-smi">formScrollView</span> {
+    <span class="pl-k">return</span> <span class="pl-c1">100</span>;
+}
+- (<span class="pl-c1">CGFloat</span>)<span class="pl-en">heightForSection</span><span class="pl-en">:</span>(FormScrollView *)<span class="pl-smi">formScrollView</span> {
+    <span class="pl-k">return</span> <span class="pl-c1">44</span>;
+}
+- (<span class="pl-c1">CGFloat</span>)<span class="pl-en">widthForColumn</span><span class="pl-en">:</span>(FormScrollView *)<span class="pl-smi">formScrollView</span> {
+    <span class="pl-k">return</span> <span class="pl-c1">80</span>;
+}
+- (FormSectionHeaderView *)<span class="pl-en">form</span><span class="pl-en">:</span>(FormScrollView *)<span class="pl-smi">formScrollView</span> <span class="pl-en">sectionHeaderAtSection</span><span class="pl-en">:</span>(<span class="pl-k">NSInteger</span>)<span class="pl-smi">section</span> {
+    FormSectionHeaderView *header = [formScrollView <span class="pl-c1">dequeueReusableSectionWithIdentifier:</span><span class="pl-s"><span class="pl-pds">@"</span>Section<span class="pl-pds">"</span></span>];
+    <span class="pl-k">if</span> (header == <span class="pl-c1">NULL</span>) {
+        header = [[FormSectionHeaderView <span class="pl-c1">alloc</span>] <span class="pl-c1">initWithIdentifier:</span><span class="pl-s"><span class="pl-pds">@"</span>Section<span class="pl-pds">"</span></span>];
+    }
+    [header <span class="pl-c1">setTitle:</span>[<span class="pl-c1">NSString</span> <span class="pl-c1">stringWithFormat:</span><span class="pl-s"><span class="pl-pds">@"</span>第<span class="pl-c1">%ld</span>行<span class="pl-pds">"</span></span>, (<span class="pl-k">long</span>)section] <span class="pl-c1">forState:</span>UIControlStateNormal];
+    <span class="pl-c">/*[header setBackgroundColor:[UIColor redColor]];*/</span>
+    [header <span class="pl-c1">setTitleColor:</span>[UIColor <span class="pl-c1">blueColor</span>] <span class="pl-c1">forState:</span>UIControlStateNormal];
+    <span class="pl-k">return</span> header;
+}
+- (FormColumnHeaderView *)<span class="pl-en">form</span><span class="pl-en">:</span>(FormScrollView *)<span class="pl-smi">formScrollView</span> <span class="pl-en">columnHeaderAtColumn</span><span class="pl-en">:</span>(<span class="pl-k">NSInteger</span>)<span class="pl-smi">column</span> {
+    FormColumnHeaderView *header = [formScrollView <span class="pl-c1">dequeueReusableColumnWithIdentifier:</span><span class="pl-s"><span class="pl-pds">@"</span>Column<span class="pl-pds">"</span></span>];
+    <span class="pl-k">if</span> (header == <span class="pl-c1">NULL</span>) {
+        header = [[FormColumnHeaderView <span class="pl-c1">alloc</span>] <span class="pl-c1">initWithIdentifier:</span><span class="pl-s"><span class="pl-pds">@"</span>Column<span class="pl-pds">"</span></span>];
+    }
+    [header <span class="pl-c1">setTitle:</span>[<span class="pl-c1">NSString</span> <span class="pl-c1">stringWithFormat:</span><span class="pl-s"><span class="pl-pds">@"</span>第<span class="pl-c1">%ld</span>列<span class="pl-pds">"</span></span>, (<span class="pl-k">long</span>)column] <span class="pl-c1">forState:</span>UIControlStateNormal];
+    <span class="pl-c">/*[header setBackgroundColor:[UIColor greenColor]];*/</span>
+    [header <span class="pl-c1">setTitleColor:</span>[UIColor <span class="pl-c1">blueColor</span>] <span class="pl-c1">forState:</span>UIControlStateNormal];
+    <span class="pl-k">return</span> header;
+}
+- (FormCell *)<span class="pl-en">form</span><span class="pl-en">:</span>(FormScrollView *)<span class="pl-smi">formScrollView</span> <span class="pl-en">cellForColumnAtIndexPath</span><span class="pl-en">:</span>(FIndexPath *)<span class="pl-smi">indexPath</span> {
+    FormCell *cell = [formScrollView <span class="pl-c1">dequeueReusableCellWithIdentifier:</span><span class="pl-s"><span class="pl-pds">@"</span>Cell<span class="pl-pds">"</span></span>];
+    <span class="pl-c1">NSLog</span>(<span class="pl-s"><span class="pl-pds">@"</span><span class="pl-c1">%@</span><span class="pl-pds">"</span></span>, cell);
+    <span class="pl-k">if</span> (cell == <span class="pl-c1">NULL</span>) {
+        cell = [[FormCell <span class="pl-c1">alloc</span>] <span class="pl-c1">initWithIdentifier:</span><span class="pl-s"><span class="pl-pds">@"</span>Cell<span class="pl-pds">"</span></span>];
+        <span class="pl-k">static</span> <span class="pl-k">int</span> i=<span class="pl-c1">0</span>;
+        i++;
+        <span class="pl-c1">NSLog</span>(<span class="pl-s"><span class="pl-pds">@"</span><span class="pl-c1">%d</span>--<span class="pl-c1">%ld</span><span class="pl-pds">"</span></span>, i, (<span class="pl-k">long</span>)indexPath.<span class="pl-smi">section</span>);
+    }
+    <span class="pl-c1">NSDictionary</span> *dic = [_data <span class="pl-c1">objectAtIndex:</span>indexPath.section];
+    [cell <span class="pl-c1">setTitle:</span>dic[<span class="pl-s"><span class="pl-pds">@"</span>name<span class="pl-pds">"</span></span>] <span class="pl-c1">forState:</span>UIControlStateNormal];
+    [cell <span class="pl-c1">setTitleColor:</span>[UIColor <span class="pl-c1">blueColor</span>] <span class="pl-c1">forState:</span>UIControlStateNormal];
+    <span class="pl-c">/*[cell setBackgroundColor:[UIColor yellowColor]];*/</span>
+    <span class="pl-k">return</span> cell;
+}
+- (<span class="pl-k">void</span>)<span class="pl-en">form</span><span class="pl-en">:</span>(FormScrollView *)<span class="pl-smi">formScrollView</span> <span class="pl-en">didSelectSectionAtIndex</span><span class="pl-en">:</span>(<span class="pl-k">NSInteger</span>)<span class="pl-smi">section</span> {
+    <span class="pl-c1">NSLog</span>(<span class="pl-s"><span class="pl-pds">@"</span>Click Section At Index:<span class="pl-c1">%ld</span><span class="pl-pds">"</span></span>, (<span class="pl-k">long</span>)section);
+}
+- (<span class="pl-k">void</span>)<span class="pl-en">form</span><span class="pl-en">:</span>(FormScrollView *)<span class="pl-smi">formScrollView</span> <span class="pl-en">didSelectColumnAtIndex</span><span class="pl-en">:</span>(<span class="pl-k">NSInteger</span>)<span class="pl-smi">column</span> {
+    <span class="pl-c1">NSLog</span>(<span class="pl-s"><span class="pl-pds">@"</span>Click Cloumn At Index:<span class="pl-c1">%ld</span><span class="pl-pds">"</span></span>, (<span class="pl-k">long</span>)column);
+}
+- (<span class="pl-k">void</span>)<span class="pl-en">form</span><span class="pl-en">:</span>(FormScrollView *)<span class="pl-smi">formScrollView</span> <span class="pl-en">didSelectCellAtIndexPath</span><span class="pl-en">:</span>(FIndexPath *)<span class="pl-smi">indexPath</span> {
+    <span class="pl-c1">NSLog</span>(<span class="pl-s"><span class="pl-pds">@"</span>Click Cell At IndexPath:<span class="pl-c1">%ld</span>,<span class="pl-c1">%ld</span><span class="pl-pds">"</span></span>, (<span class="pl-k">long</span>)indexPath.<span class="pl-smi">section</span>, (<span class="pl-k">long</span>)indexPath.<span class="pl-smi">column</span>);
+}
+- (<span class="pl-k">void</span>)<span class="pl-en">didReceiveMemoryWarning</span> {
+    [<span class="pl-v">super</span> <span class="pl-c1">didReceiveMemoryWarning</span>];
+}
+
+<span class="pl-k">@end</span>
+</pre></div>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/whde/WhdeForm">Whdeform</a> is maintained by <a href="https://github.com/whde">whde</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
