@@ -8,4 +8,4 @@ iOS 表格
 - 添加了FIndexPath,{section, column}
 - 表头添加点击事件
 - 添加了网格
-<image src="https://raw.githubusercontent.com/whde/WhdeForm/master/Screen.gif" width=200 height=100% alin="center">
+<p><image src="https://raw.githubusercontent.com/whde/WhdeForm/master/Screen.gif" width=200 height=100% alin="center"/></p>
