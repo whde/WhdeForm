@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import "FormScrollView.h"
 @interface ViewController ()<FDelegate, FDataSource> {
-    NSArray *data;
+    NSArray *_data;
 }
 
 @end
@@ -26,19 +26,28 @@
     table.fDataSource = self;
     [self.view addSubview:table];
     
-    data = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"datas" ofType:@"plist"]];
+    _data = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"datas" ofType:@"plist"]];
     [table reloadData];
 }
 - (FTopLeftHeaderView *)topLeftHeadViewForForm:(FormScrollView *)formScrollView {
-    FTopLeftHeaderView *view = [[FTopLeftHeaderView alloc] initWithSectionTitle:@"行数" columnTitle:@"列数"];
+    FTopLeftHeaderView *view = [formScrollView dequeueReusableTopLeftView];
+    if (view == NULL) {
+        view = [[FTopLeftHeaderView alloc] initWithSectionTitle:@"行数" columnTitle:@"列数"];
+    }
     return view;
 }
 
 - (NSInteger)numberOfSection:(FormScrollView *)formScrollView {
-    return data.count;
+    return _data.count;
 }
 - (NSInteger)numberOfColumn:(FormScrollView *)formScrollView {
-    return 10;
+    return 100;
+}
+- (CGFloat)heightForSection:(FormScrollView *)formScrollView {
+    return 44;
+}
+- (CGFloat)widthForColumn:(FormScrollView *)formScrollView {
+    return 80;
 }
 - (FormSectionHeaderView *)form:(FormScrollView *)formScrollView sectionHeaderAtSection:(NSInteger)section {
     FormSectionHeaderView *header = [formScrollView dequeueReusableSectionWithIdentifier:@"Section"];
@@ -46,7 +55,7 @@
         header = [[FormSectionHeaderView alloc] initWithIdentifier:@"Section"];
     }
     [header setTitle:[NSString stringWithFormat:@"第%ld行", (long)section] forState:UIControlStateNormal];
-    [header setBackgroundColor:[UIColor redColor]];
+    /*[header setBackgroundColor:[UIColor redColor]];*/
     [header setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     return header;
 }
@@ -56,7 +65,7 @@
         header = [[FormColumnHeaderView alloc] initWithIdentifier:@"Column"];
     }
     [header setTitle:[NSString stringWithFormat:@"第%ld列", (long)column] forState:UIControlStateNormal];
-    [header setBackgroundColor:[UIColor greenColor]];
+    /*[header setBackgroundColor:[UIColor greenColor]];*/
     [header setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     return header;
 }
@@ -67,18 +76,23 @@
         cell = [[FormCell alloc] initWithIdentifier:@"Cell"];
         static int i=0;
         i++;
-        NSLog(@"%d--%ld", i, indexPath.section);
+        NSLog(@"%d--%ld", i, (long)indexPath.section);
     }
-    NSDictionary *dic = [data objectAtIndex:indexPath.section];
+    NSDictionary *dic = [_data objectAtIndex:indexPath.section];
     [cell setTitle:dic[@"name"] forState:UIControlStateNormal];
     [cell setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-    [cell setBackgroundColor:[UIColor yellowColor]];
+    /*[cell setBackgroundColor:[UIColor yellowColor]];*/
     return cell;
 }
-- (void)form:(FormScrollView *)formScrollView didSelectAtIndexPath:(FIndexPath *)indexPath {
-    
+- (void)form:(FormScrollView *)formScrollView didSelectSectionAtIndex:(NSInteger)section {
+    NSLog(@"Click Section At Index:%ld", (long)section);
 }
-
+- (void)form:(FormScrollView *)formScrollView didSelectColumnAtIndex:(NSInteger)column {
+    NSLog(@"Click Cloumn At Index:%ld", (long)column);
+}
+- (void)form:(FormScrollView *)formScrollView didSelectCellAtIndexPath:(FIndexPath *)indexPath {
+    NSLog(@"Click Cell At IndexPath:%ld,%ld", (long)indexPath.section, (long)indexPath.column);
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import <WhdeForm/FormScrollView.h>
 //! Project version number for WhdeForm.
 FOUNDATION_EXPORT double WhdeFormVersionNumber;
 

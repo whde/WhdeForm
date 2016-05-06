@@ -19,7 +19,6 @@
 /* Begin PBXFileReference section */
 		F88601E51CDB55930044AB21 /* FormScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormScrollView.h; sourceTree = "<group>"; };
 		F88601E61CDB55930044AB21 /* FormScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormScrollView.m; sourceTree = "<group>"; };
-		F88601E71CDB55930044AB21 /* WhdeForm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhdeForm.h; sourceTree = "<group>"; };
 		F888FC741CD9A5F500D1099E /* WhdeFormDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhdeFormDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F888FC781CD9A5F500D1099E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F888FC7A1CD9A5F500D1099E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -48,7 +47,6 @@
 			children = (
 				F88601E51CDB55930044AB21 /* FormScrollView.h */,
 				F88601E61CDB55930044AB21 /* FormScrollView.m */,
-				F88601E71CDB55930044AB21 /* WhdeForm.h */,
 			);
 			name = Class;
 			path = ../../WhdeForm/WhdeForm/Class;

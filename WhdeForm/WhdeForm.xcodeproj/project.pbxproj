@@ -21,17 +21,17 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		F84BB2BD1CDC4C6900EB7E30 /* WhdeForm.h in Headers */ = {isa = PBXBuildFile; fileRef = F84BB2BC1CDC4C6900EB7E30 /* WhdeForm.h */; };
 		F88601ED1CDB55A80044AB21 /* FormScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = F88601EA1CDB55A80044AB21 /* FormScrollView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F88601EE1CDB55A80044AB21 /* FormScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = F88601EB1CDB55A80044AB21 /* FormScrollView.m */; };
-		F88601EF1CDB55A80044AB21 /* WhdeForm.h in Headers */ = {isa = PBXBuildFile; fileRef = F88601EC1CDB55A80044AB21 /* WhdeForm.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F84BB2BC1CDC4C6900EB7E30 /* WhdeForm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhdeForm.h; sourceTree = "<group>"; };
 		F88601D01CDB54B50044AB21 /* WhdeForm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WhdeForm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F88601D51CDB54B50044AB21 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F88601EA1CDB55A80044AB21 /* FormScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormScrollView.h; sourceTree = "<group>"; };
 		F88601EB1CDB55A80044AB21 /* FormScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormScrollView.m; sourceTree = "<group>"; };
-		F88601EC1CDB55A80044AB21 /* WhdeForm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhdeForm.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +64,7 @@
 		F88601D21CDB54B50044AB21 /* WhdeForm */ = {
 			isa = PBXGroup;
 			children = (
+				F84BB2BC1CDC4C6900EB7E30 /* WhdeForm.h */,
 				F88601E91CDB55A80044AB21 /* Class */,
 				F88601D51CDB54B50044AB21 /* Info.plist */,
 			);
@@ -75,7 +76,6 @@
 			children = (
 				F88601EA1CDB55A80044AB21 /* FormScrollView.h */,
 				F88601EB1CDB55A80044AB21 /* FormScrollView.m */,
-				F88601EC1CDB55A80044AB21 /* WhdeForm.h */,
 			);
 			path = Class;
 			sourceTree = "<group>";
@@ -87,7 +87,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F88601EF1CDB55A80044AB21 /* WhdeForm.h in Headers */,
+				F84BB2BD1CDC4C6900EB7E30 /* WhdeForm.h in Headers */,
 				F88601ED1CDB55A80044AB21 /* FormScrollView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -352,6 +352,7 @@
 				F88601F31CDB55C10044AB21 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -14,14 +14,17 @@
 @class FormCell;
 @class FTopLeftHeaderView;
 @protocol FDelegate <NSObject>
-- (void)form:(FormScrollView *)formScrollView didSelectAtIndexPath:(FIndexPath *)indexPath;
+@optional
+- (void)form:(FormScrollView *)formScrollView didSelectCellAtIndexPath:(FIndexPath *)indexPath;
+- (void)form:(FormScrollView *)formScrollView didSelectSectionAtIndex:(NSInteger)section;
+- (void)form:(FormScrollView *)formScrollView didSelectColumnAtIndex:(NSInteger)column;
 @end
 @protocol FDataSource <NSObject>
 @required
 - (NSInteger)numberOfSection:(FormScrollView *)formScrollView;
 - (NSInteger)numberOfColumn:(FormScrollView *)formScrollView;
-//- (CGFloat)form:(FormScrollView *)formScrollView heightForSection:(NSInteger)section;
-//- (NSInteger)form:(FormScrollView *)formScrollView numberOfColumnInSection:(NSInteger)section;
+- (CGFloat)heightForSection:(FormScrollView *)formScrollView;
+- (CGFloat)widthForColumn:(FormScrollView *)formScrollView;
 - (FTopLeftHeaderView *)topLeftHeadViewForForm:(FormScrollView *)formScrollView;
 - (FormSectionHeaderView *)form:(FormScrollView *)formScrollView sectionHeaderAtSection:(NSInteger)section;
 - (FormColumnHeaderView *)form:(FormScrollView *)formScrollView columnHeaderAtColumn:(NSInteger)column;
@@ -31,12 +34,10 @@
 @interface FormScrollView : UIScrollView
 @property (nonatomic, assign) id<FDelegate>fDelegate;
 @property (nonatomic, assign) id<FDataSource>fDataSource;
-- (id)init;
-- (id)initWithFrame:(CGRect)frame;
-- (id)initWithCoder:(NSCoder *)aDecoder;
 - (FormColumnHeaderView *)dequeueReusableColumnWithIdentifier:(NSString *)identifier;
 - (FormSectionHeaderView *)dequeueReusableSectionWithIdentifier:(NSString *)identifier;
 - (FormCell *)dequeueReusableCellWithIdentifier:(NSString *)identifier;
+- (FTopLeftHeaderView *)dequeueReusableTopLeftView;
 - (void)reloadData;
 
 @end
@@ -52,17 +53,17 @@
 //// FormColumnHeaderView
 @interface FormColumnHeaderView : UIButton
 @property (nonatomic, copy, readonly) NSString *identifier;
-@property (nonatomic, copy, readonly) FIndexPath *indexPath;
+@property (nonatomic, assign, readonly) NSInteger column;
 - (instancetype)initWithIdentifier:(NSString *)identifier;
-- (void)setIndexPath:(FIndexPath *)indexPath;
+- (void)setColumn:(NSInteger)column;
 @end
 
 //// FormSectionHeaderView
 @interface FormSectionHeaderView : UIButton
 @property (nonatomic, copy, readonly) NSString *identifier;
-@property (nonatomic, copy, readonly) FIndexPath *indexPath;
+@property (nonatomic, assign, readonly) NSInteger section;
 - (instancetype)initWithIdentifier:(NSString *)identifier;
-- (void)setIndexPath:(FIndexPath *)indexPath;
+- (void)setSection:(NSInteger)section;
 @end
 
 //// FTopLeftHeaderView
