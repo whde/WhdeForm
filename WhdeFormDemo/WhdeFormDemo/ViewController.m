@@ -55,7 +55,7 @@
         header = [[FormSectionHeaderView alloc] initWithIdentifier:@"Section"];
     }
     [header setTitle:[NSString stringWithFormat:@"第%ld行", (long)section] forState:UIControlStateNormal];
-    /*[header setBackgroundColor:[UIColor redColor]];*/
+    [header setBackgroundColor:[UIColor redColor]];
     [header setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     return header;
 }
@@ -65,7 +65,7 @@
         header = [[FormColumnHeaderView alloc] initWithIdentifier:@"Column"];
     }
     [header setTitle:[NSString stringWithFormat:@"第%ld列", (long)column] forState:UIControlStateNormal];
-    /*[header setBackgroundColor:[UIColor greenColor]];*/
+    [header setBackgroundColor:[UIColor greenColor]];
     [header setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     return header;
 }
